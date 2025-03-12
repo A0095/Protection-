@@ -4,26 +4,9 @@ import sys
 import signal
 import random
 import subprocess
-import requests
-from datetime import datetime
 import threading
 import ctypes
-
-def update_script():
-    GITHUB_URL = "https://github.com/A0095/Protection-/new/main"
-    LOCAL_SCRIPT_PATH = sys.argv[0]  # Chemin du script actuel
-    
-    try:
-        response = requests.get(GITHUB_URL)
-        if response.status_code == 200:
-            with open(LOCAL_SCRIPT_PATH, "wb") as file:
-                file.write(response.content)
-            print("Mise à jour réussie ! Relance du script...")
-            os.execv(sys.executable, [sys.executable] + sys.argv)  # Relance le script mis à jour
-        else:
-            print("Erreur lors du téléchargement de la mise à jour :", response.status_code)
-    except Exception as e:
-        print("Échec de la mise à jour :", e)
+from datetime import datetime
 
 def log_connection():
     documents_path = os.path.join(os.path.expanduser("~"), "Documents")
@@ -73,14 +56,12 @@ def request_password():
         "Pathétique. Même avec du temps, tu n'es capable de rien !",
         "Regarde-toi... un échec complet. Laisse tomber !",
         "Tu viens de prouver à quel point tu es incompétent. Dégage !"
-        "tes pas beau" 
     ]
     
     print(random.choice(taunts))
     print("(Simulation de l'arrêt de l'ordinateur)")
 
 if __name__ == "__main__":
-    update_script()  # Vérifie et met à jour le script avant exécution
     signal.signal(signal.SIGINT, handle_exit)  # Capture Ctrl+C
     signal.signal(signal.SIGTERM, handle_exit)  # Capture la fermeture du processus
     
