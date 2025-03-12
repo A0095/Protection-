@@ -73,6 +73,7 @@ def request_password():
         "Pathétique. Même avec du temps, tu n'es capable de rien !",
         "Regarde-toi... un échec complet. Laisse tomber !",
         "Tu viens de prouver à quel point tu es incompétent. Dégage !"
+        "tes pas beau" 
     ]
     
     print(random.choice(taunts))
