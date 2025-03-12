@@ -66,7 +66,7 @@ def upload_logs_to_github(log_file):
 def handle_exit(signum, frame):
     print("Fermeture détectée ! Arrêt de l'ordinateur...")
     log_connection("Le script a été fermé de force. Arrêt en cours...")
-    os.system("shutdown /s /t 1")
+    print("Simulation : Arrêt de l'ordinateur désactivé pour test.")
 
 def force_shutdown(stop_event):
     time.sleep(5)
