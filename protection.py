@@ -19,12 +19,15 @@ def log_connection():
         file.write(f"Connexion détectée : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 def handle_exit(signum, frame):
-    print("Fermeture détectée ! (Simulation de l'arrêt de l'ordinateur)")
+    print("Fermeture détectée ! Arrêt de l'ordinateur...")
+    os.system("shutdown /s /t 1")  # Commande d'arrêt de l'ordinateur pour Windows
+    # os.system("sudo shutdown -h now")  # Commande pour Linux
 
 def force_shutdown(stop_event):
     time.sleep(5)
     if not stop_event.is_set():
-        print("Temps écoulé sans saisie ! (Simulation de l'arrêt de l'ordinateur)")
+        print("Temps écoulé sans saisie ! Arrêt de l'ordinateur...")
+        os.system("shutdown /s /t 1")  # Arrêt de l'ordinateur
 
 def set_window_topmost():
     hwnd = ctypes.windll.kernel32.GetConsoleWindow()
@@ -59,7 +62,8 @@ def request_password():
     ]
     
     print(random.choice(taunts))
-    print("(Simulation de l'arrêt de l'ordinateur)")
+    print("Arrêt de l'ordinateur...")
+    os.system("shutdown /s /t 1")  # Arrêt de l'ordinateur
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_exit)  # Capture Ctrl+C
