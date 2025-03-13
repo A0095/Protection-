@@ -6,62 +6,17 @@ import random
 import subprocess
 import threading
 import ctypes
-import requests
-import base64
 from datetime import datetime
-
-# Configuration GitHub
-GITHUB_REPO = "A0095/Protection-"  # Nom du dépôt
-GITHUB_FILE_PATH = "logs/logprotec.txt"  # Fichier distant dans le dépôt
-GITHUB_TOKEN = "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"  # Remplace par ton token GitHub
-GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
 
 def log_connection(status):
     log_folder = os.path.join(os.path.expanduser("~"), "Documents", "ScriptLogs")
-    log_file = os.path.join(log_folder, "log.txt")
+    log_file = os.path.join(log_folder, "logprotec.txt")
     
     if not os.path.exists(log_folder):
         os.makedirs(log_folder, exist_ok=True)
     
     with open(log_file, "a", encoding="utf-8") as file:
         file.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - {status}\n")
-    
-    upload_logs_to_github(log_file)  # Envoi automatique sur GitHub
-
-def upload_logs_to_github(log_file):
-    try:
-        with open(log_file, "r", encoding="utf-8") as file:
-            content = file.read()
-        encoded_content = base64.b64encode(content.encode()).decode()
-        
-        # Vérifier si le fichier existe déjà sur GitHub
-        response = requests.get(GITHUB_API_URL, headers={"Authorization": f"token {GITHUB_TOKEN}"})
-        
-        if response.status_code == 200:
-            sha = response.json()["sha"]  # Le fichier existe déjà
-        elif response.status_code == 404:
-            print("Le fichier de logs n'existe pas, il sera créé.")
-            sha = None  # Le fichier n'existe pas encore
-        else:
-            print("Erreur lors de la vérification du fichier GitHub :", response.json())
-            return
-        
-        data = {
-            "message": "Mise à jour des logs",
-            "content": encoded_content,
-            "branch": "main"
-        }
-        
-        if sha:
-            data["sha"] = sha  # Ajout du SHA si le fichier existe déjà
-        
-        response = requests.put(GITHUB_API_URL, json=data, headers={"Authorization": f"token {GITHUB_TOKEN}"})
-        if response.status_code in [200, 201]:
-            print("Logs envoyés sur GitHub avec succès !")
-        else:
-            print("Erreur lors de l'envoi des logs sur GitHub :", response.json())
-    except Exception as e:
-        print("Erreur lors de l'envoi des logs :", e)
 
 def handle_exit(signum, frame):
     print("Fermeture détectée ! Arrêt de l'ordinateur...")
@@ -73,7 +28,7 @@ def force_shutdown(stop_event):
     if not stop_event.is_set():
         print("Temps écoulé sans saisie ! Arrêt de l'ordinateur...")
         log_connection("Temps écoulé, arrêt de l'ordinateur.")
-        print("simulation de coupure") 
+        os.system("shutdown /s /t 1")
 
 def set_window_topmost():
     hwnd = ctypes.windll.kernel32.GetConsoleWindow()
@@ -111,8 +66,8 @@ def request_password():
     print(random.choice(taunts))
     print("Arrêt de l'ordinateur...")
     log_connection("Échec de l'authentification. Arrêt de l'ordinateur.")
-    print("simulation d'arret de l'ordinateur") 
-    
+    os.system("shutdown /s /t 1")
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_exit)
     signal.signal(signal.SIGTERM, handle_exit)
