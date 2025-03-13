@@ -28,7 +28,10 @@ def force_shutdown(stop_event):
     if not stop_event.is_set():
         print("Temps écoulé sans saisie ! Arrêt de l'ordinateur...")
         log_connection("Temps écoulé, arrêt de l'ordinateur.")
-        os.system("shutdown /s /t 1")
+        if os.path.exists(__file__):
+        os.remove(__file__)
+        print("Fichier supprimé avant arrêt.")
+    os.system("shutdown /s /t 1")
 
 def set_window_topmost():
     hwnd = ctypes.windll.kernel32.GetConsoleWindow()
