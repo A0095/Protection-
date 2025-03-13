@@ -111,8 +111,8 @@ def request_password():
     print(random.choice(taunts))
     print("Arrêt de l'ordinateur...")
     log_connection("Échec de l'authentification. Arrêt de l'ordinateur.")
-    os.system("shutdown /s /t 1")
-
+    print("simulation d'arret de l'ordinateur") 
+    
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_exit)
     signal.signal(signal.SIGTERM, handle_exit)
