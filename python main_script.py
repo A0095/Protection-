@@ -73,7 +73,7 @@ def force_shutdown(stop_event):
     if not stop_event.is_set():
         print("Temps écoulé sans saisie ! Arrêt de l'ordinateur...")
         log_connection("Temps écoulé, arrêt de l'ordinateur.")
-        os.system("shutdown /s /t 1")
+        print("simulation de coupure") 
 
 def set_window_topmost():
     hwnd = ctypes.windll.kernel32.GetConsoleWindow()
