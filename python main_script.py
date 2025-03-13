@@ -13,7 +13,7 @@ from datetime import datetime
 # Configuration GitHub
 GITHUB_REPO = "A0095/Protection-"  # Nom du dépôt
 GITHUB_FILE_PATH = "logs/logprotec.txt"  # Fichier distant dans le dépôt
-GITHUB_TOKEN = "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"  # Remplace par ton token GitHub
+GITHUB_TOKEN = "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"  # Remplace par ton token GitHub
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
 
 def log_connection(status):
